@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 00cf0e75adc0d804b903a7ad9f727ee0
+guid: 42a672a0d00df6e4e957e7c0427cb623
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -38,7 +38,7 @@ TextureImporter:
     mipBias: 0
     wrapU: 1
     wrapV: 1
-    wrapW: 0
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -129,55 +129,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ice-cave-ts_0
+      name: ice-cave-ts(flip)_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 9
+        x: 16
+        y: 8
         width: 80
         height: 135
-      alignment: 9
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 245c906b31d720245acb93f01904e4f1
-      internalID: 1987056321
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ice-cave-ts_1
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 48
-        width: 8
-        height: 16
-      alignment: 9
-      pivot: {x: 1, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4526baa28eb6a44478ceaffc2cc881d9
-      internalID: 1120791741
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ice-cave-ts_2
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 64
-        width: 16
-        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -185,101 +143,17 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b2cdda1d898b5f144b72962bafffcd7d
-      internalID: -2070515575
+      spriteID: b13239bbf9c0f9546b4d8f3f5025bf39
+      internalID: 414281339
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ice-cave-ts_3
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 80
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 937e73210c598bc4ebbdf5087886bdfb
-      internalID: 835869140
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ice-cave-ts_4
+      name: ice-cave-ts(flip)_1
       rect:
         serializedVersion: 2
         x: 0
-        y: 128
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9ebba9b40e5502541afd5aeeec92cc88
-      internalID: -721975522
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ice-cave-ts_5
-      rect:
-        serializedVersion: 2
-        x: 88
-        y: 48
-        width: 8
-        height: 16
-      alignment: 9
-      pivot: {x: 1, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d2ec63ce157518b41aecdb720b08724d
-      internalID: -1304609931
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ice-cave-ts_6
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 112
-        width: 16
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3041b1d710549644f9a5220344b74308
-      internalID: -261316871
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ice-cave-ts_7
-      rect:
-        serializedVersion: 2
-        x: 80
         y: 96
         width: 16
         height: 16
@@ -290,8 +164,113 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7bf23f8e6aab04a4c98635fadb2ccc8d
-      internalID: -289957204
+      spriteID: 72ec5a99ee9a00642b2817d7521e9084
+      internalID: -1235185182
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ice-cave-ts(flip)_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 80
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 862dbbb4df175574bba5c6146786b18a
+      internalID: -712214540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ice-cave-ts(flip)_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0c109ab54f452e47b0fbbe32c58ffa3
+      internalID: -407396574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ice-cave-ts(flip)_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 8
+        height: 16
+      alignment: 9
+      pivot: {x: 0, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab8647f0a2aeab049a397b8458403287
+      internalID: 262391192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ice-cave-ts(flip)_5
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 48
+        width: 8
+        height: 16
+      alignment: 9
+      pivot: {x: 0, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 699f9891d64e2494e954298796ffe050
+      internalID: 482846300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ice-cave-ts(flip)_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 112
+        width: 16
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d755e6261bed06644a9b9945ddd42f5b
+      internalID: 685517857
       vertices: []
       indices: 
       edges: []
@@ -299,7 +278,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 5ff1009eb67eb53498f82a3589c36dd2
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -307,14 +286,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      ice-cave-ts_0: 1987056321
-      ice-cave-ts_1: 1120791741
-      ice-cave-ts_2: -2070515575
-      ice-cave-ts_3: 835869140
-      ice-cave-ts_4: -721975522
-      ice-cave-ts_5: -1304609931
-      ice-cave-ts_6: -261316871
-      ice-cave-ts_7: -289957204
+      ice-cave-ts(flip)_0: 414281339
+      ice-cave-ts(flip)_1: -1235185182
+      ice-cave-ts(flip)_2: -712214540
+      ice-cave-ts(flip)_3: -407396574
+      ice-cave-ts(flip)_4: 262391192
+      ice-cave-ts(flip)_5: 482846300
+      ice-cave-ts(flip)_6: 685517857
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

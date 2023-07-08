@@ -13,6 +13,7 @@ public class GridCell_Collision : MonoBehaviour, IGridCellRef
 
     private void OnTriggerStay2D(Collider2D collision)
     {
+        return;
         if (_gridCellRef._gridCellStatus.isOccupied || !collision.CompareTag("GemBall")) return;
 
         GemBallRefs ballRef = collision.GetComponent<GemBallRefs>();
