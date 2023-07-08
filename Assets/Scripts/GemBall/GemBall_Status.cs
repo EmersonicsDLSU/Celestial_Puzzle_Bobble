@@ -27,7 +27,7 @@ public class GemBall_Status : MonoBehaviour, IGemBallRef
 
     public void RefUpdate(GemBallRefs mainRef)
     {
-
+        
     }
     public void SetGemBallRef(GemBallRefs _gemBallRef)
     {

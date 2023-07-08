@@ -19,9 +19,7 @@ public class GridCell_Collision : MonoBehaviour, IGridCellRef
         // Check if the ball is ready to be attach
         if (ballRef == null || !ballRef._gemBallStatus._canAttach) return;
         
-    #if UNITY_EDITOR
         Debug.Log("Ball Attached!");
-    #endif
 
         // assign the ball to the grid position 
         collision.transform.position = transform.position;

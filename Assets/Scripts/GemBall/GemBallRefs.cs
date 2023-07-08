@@ -92,6 +92,7 @@ public class GemBallRefs : MonoBehaviour
         // controls the update of all components
         foreach (var comp in _componentList)
         {
+            
             comp.RefUpdate(this);   
         }
     }

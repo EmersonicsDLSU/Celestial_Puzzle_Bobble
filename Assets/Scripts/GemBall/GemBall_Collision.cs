@@ -14,12 +14,13 @@ public class GemBall_Collision : MonoBehaviour, IGemBallRef
             _gemBallRef._gemBallStatus.SetCanAttach(true);
             
             Debug.Log("Ball Hit!");
+            GemBallRefs tempp = _gemBallRef;
         }
     }
 
     public void RefUpdate(GemBallRefs mainRef)
     {
-
+        
     }
     public void SetGemBallRef(GemBallRefs _gemBallRef)
     {
