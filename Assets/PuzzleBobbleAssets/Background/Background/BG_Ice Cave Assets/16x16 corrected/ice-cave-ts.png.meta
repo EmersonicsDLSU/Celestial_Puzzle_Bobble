@@ -134,7 +134,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 9
-        width: 80
+        width: 96
         height: 135
       alignment: 9
       pivot: {x: 0.5, y: 0.5}
@@ -296,6 +296,90 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: ice-cave-ts_8
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 68
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f200920018d7a2a41aedb474df0818ea
+      internalID: 723069922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ice-cave-ts_9
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 113
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9beb0cc9a8fb3ed44a4929e7096d1f4c
+      internalID: 1913164491
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ice-cave-ts_10
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 86
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c0bba43d07fa44479b58cef96a19028
+      internalID: -75605223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ice-cave-ts_11
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 107
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c34251610e3485d43bc6189460f89ee8
+      internalID: -576055675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -309,12 +393,16 @@ TextureImporter:
     nameFileIdTable:
       ice-cave-ts_0: 1987056321
       ice-cave-ts_1: 1120791741
+      ice-cave-ts_10: -75605223
+      ice-cave-ts_11: -576055675
       ice-cave-ts_2: -2070515575
       ice-cave-ts_3: 835869140
       ice-cave-ts_4: -721975522
       ice-cave-ts_5: -1304609931
       ice-cave-ts_6: -261316871
       ice-cave-ts_7: -289957204
+      ice-cave-ts_8: 723069922
+      ice-cave-ts_9: 1913164491
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

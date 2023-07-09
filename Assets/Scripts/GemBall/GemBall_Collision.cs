@@ -5,8 +5,11 @@ using UnityEngine;
 public class GemBall_Collision : MonoBehaviour, IGemBallRef
 {
     public GemBallRefs _gemBallRef { get; private set; }
-    private const float _maxHorizontalPos = 8.25f;
-    private const float _horizontalOffset = 0.75f;
+    private const float _maxVerticalPos = 12.0f;
+    private const float _maxHorizontalPosOdd = 9.75f;
+    private const float _maxHorizontalPosEven = 10.25f;
+    private const float _horizontalOffsetOdd = 0.75f;
+    private const float _horizontalOffsetEven = 0.25f;
 
     private Vector3 _lastVelocity;
         
@@ -23,36 +26,89 @@ public class GemBall_Collision : MonoBehaviour, IGemBallRef
         // Check if the trigger stayed ball was hit to a wall or to a ball
         if (collision.gameObject.CompareTag("GemBall") || collision.gameObject.CompareTag("Wall"))
         {
-            Vector3 ogPos = transform.position;
-            Vector3 newPosition = ogPos;
-            // snap the position
-            Debug.Log($"{ogPos.x % 1f}");
-            newPosition.x = Mathf.FloorToInt(ogPos.x);
-            newPosition.y = Mathf.Floor(ogPos.y);
-            
-            // if odd row
-            if (newPosition.y % 2 >= 1) {
-                if (newPosition.x + _horizontalOffset >= _maxHorizontalPos)
-                    newPosition.x = _maxHorizontalPos;
-                else
-                    newPosition.x += _horizontalOffset;
-            } // if even row
-            else {
-                if (newPosition.x >= _maxHorizontalPos)
-                    newPosition.x = _maxHorizontalPos;
-            }
+            // snap the ball to its new position
+            SnapPosition();
 
-            // assign the new position for the ball; snap reposition
-            transform.position = newPosition;
-
-            // switch the rigidbody to static
+            // switch the rigidBody to static
             _gemBallRef._rb.bodyType = RigidbodyType2D.Static;
             _gemBallRef._gemBallStatus.SetMobility(EGemBallMobility.STATIC);
-
-            Debug.Log($"Ball Hit At: {ogPos}");
-            Debug.Log($"Ball Place At: {newPosition}");
-
+            
         }
+    }
+
+    private void SnapPosition()
+    {
+        Vector3 ogPos = transform.position;
+        Vector3 newPosition = Vector3.zero;
+            
+        // snap to the Y position
+        newPosition.y = ogPos.y - Mathf.Floor(ogPos.y) < 0.5f ? Mathf.Floor(ogPos.y) : Mathf.Ceil(ogPos.y);
+        if (newPosition.y > _maxVerticalPos) newPosition.y = _maxVerticalPos;
+            
+        float leftDiff = 0.0f, rightDiff = 0.0f, leftBound = 0.0f, rightBound = 0.0f;
+        // snap to the X position
+        if (newPosition.y % 2 == 0) // if even row
+        {
+            // verify the boundary of the current position x
+            if (ogPos.x - Mathf.Floor(ogPos.x) < _horizontalOffsetEven) // lower-boundary
+            {
+                // compare difference from orig to left cell
+                leftBound = (Mathf.Floor(ogPos.x - 1) + _horizontalOffsetEven);
+                leftDiff = Mathf.Abs(ogPos.x - leftBound);
+                // compare difference from orig to right cell
+                rightBound = (Mathf.Floor(ogPos.x) + _horizontalOffsetEven);
+                rightDiff = Mathf.Abs(ogPos.x - rightBound);
+            }
+            else // higher boundary
+            {
+                // compare difference from orig to left cell
+                leftBound = (Mathf.Floor(ogPos.x) + _horizontalOffsetEven);
+                leftDiff = Mathf.Abs(ogPos.x - leftBound);
+                // compare difference from orig to right cell
+                rightBound = (Mathf.Ceil(ogPos.x) + _horizontalOffsetEven);
+                rightDiff = Mathf.Abs(ogPos.x - rightBound);
+            }
+                
+            // position the ball to the nearest cell
+            newPosition.x = leftDiff < rightDiff ? leftBound : rightBound;
+
+            if (newPosition.x > _maxHorizontalPosEven) newPosition.x = _maxHorizontalPosEven;
+            Debug.Log($"Compare Even: {leftDiff} -- {rightDiff}");
+        }
+        else // if odd row
+        {
+            // verify the boundary of the current position x
+            if (ogPos.x - Mathf.Floor(ogPos.x) < _horizontalOffsetOdd) // lower-boundary
+            {
+                // compare difference from orig to left cell
+                leftBound = (Mathf.Floor(ogPos.x - 1) + _horizontalOffsetOdd);
+                leftDiff = Mathf.Abs(ogPos.x - leftBound); // 7.57 - 6.75
+                // compare difference from orig to right cell
+                rightBound = (Mathf.Floor(ogPos.x) + _horizontalOffsetOdd);
+                rightDiff = Mathf.Abs(ogPos.x - rightBound); // 7.57 - 7.75
+            }
+            else // higher-boundary
+            {
+                // compare difference from orig to left cell
+                leftBound = (Mathf.Floor(ogPos.x) + _horizontalOffsetOdd);
+                leftDiff = Mathf.Abs(ogPos.x - leftBound);
+                // compare difference from orig to right cell
+                rightBound = (Mathf.Ceil(ogPos.x) + _horizontalOffsetOdd);
+                rightDiff = Mathf.Abs(ogPos.x - rightBound);
+            }
+                
+            // position the ball to the nearest cell
+            newPosition.x = leftDiff < rightDiff ? leftBound : rightBound;
+            
+            if (newPosition.x > _maxHorizontalPosOdd) newPosition.x = _maxHorizontalPosOdd;
+            Debug.Log($"Compare Even: {leftDiff} -- {rightDiff}");
+        }
+            
+        // assign the new position for the ball; snap reposition
+        transform.position = newPosition;
+
+        Debug.Log($"Ball Hit At: {ogPos}");
+        Debug.Log($"Ball Place At: {newPosition}");
     }
 
     public void RefUpdate(GemBallRefs mainRef)
