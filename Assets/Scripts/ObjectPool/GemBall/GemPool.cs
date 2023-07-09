@@ -15,6 +15,7 @@ public class GemPool : MonoBehaviour, IGemBallRef
     {
         _gemBallRef._rb.isKinematic = false;
         _gemBallRef._rb.AddForce(direction.normalized * force, ForceMode2D.Impulse);
+        _gemBallRef._gemBallStatus.SetMobility(EGemBallMobility.MOVING);
     }
 
     void OnCollisionEnter(Collision collision)

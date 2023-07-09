@@ -25,3 +25,10 @@ public enum EGemBall
     ENUM_SIZE,
     NONE
 };
+public enum EGemBallMobility
+{
+    STATIC = 0,
+    MOVING,
+    ENUM_SIZE,
+    NONE
+};

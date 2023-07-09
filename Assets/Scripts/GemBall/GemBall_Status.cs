@@ -6,8 +6,9 @@ public class GemBall_Status : MonoBehaviour, IGemBallRef
 {
     [SerializeField]
     private EGemBall _gemID = EGemBall.NONE;
+
+    private EGemBallMobility _gemMobility = EGemBallMobility.NONE;
     public GemBallRefs _gemBallRef { get; private set; }
-    public bool _canAttach { get; private set; } = false;
 
     void Start()
     {
@@ -34,8 +35,13 @@ public class GemBall_Status : MonoBehaviour, IGemBallRef
         this._gemBallRef = _gemBallRef;
     }
 
-    public void SetCanAttach(bool value)
+    public void SetMobility(EGemBallMobility mobility)
     {
-        _canAttach = value;
+        _gemMobility = mobility;
+    }
+
+    public EGemBallMobility GetMobility()
+    {
+        return _gemMobility;
     }
 }
