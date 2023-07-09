@@ -13,13 +13,14 @@ public class GemSpawner : MonoBehaviour
     [SerializeField] private GameObject _redPrefab;
     [SerializeField] private GameObject _whitePrefab;
     [SerializeField] private GameObject _yellowPrefab;
+    [SerializeField] private int _maxStockPerGem = 50;
     private List<GameObject> _gemPrefabList;
 
     private ObjectPooling<GemPool> _blueGemPool, _brownGemPool, _greenGemPool,
         _redGemPool, _whiteGemPool, _yellowGemPool;
     private List<ObjectPooling<GemPool>> _gemPoolList;
 
-    void Start()
+    void Awake()
     {
         InitializeObjects();
     }
@@ -53,12 +54,12 @@ public class GemSpawner : MonoBehaviour
         }
         if (willInitialize)
         {
-            _blueGemPool = new ObjectPooling<GemPool>(BlueGemFactoryMethod, TurnOnGem, TurnOffGem, 5, false);
-            _brownGemPool = new ObjectPooling<GemPool>(BrownGemFactoryMethod, TurnOnGem, TurnOffGem, 5, false);
-            _greenGemPool = new ObjectPooling<GemPool>(GreenGemFactoryMethod, TurnOnGem, TurnOffGem, 5, false);
-            _redGemPool = new ObjectPooling<GemPool>(RedGemFactoryMethod, TurnOnGem, TurnOffGem, 5, false);
-            _whiteGemPool = new ObjectPooling<GemPool>(WhiteGemFactoryMethod, TurnOnGem, TurnOffGem, 5, false);
-            _yellowGemPool = new ObjectPooling<GemPool>(YellowGemFactoryMethod, TurnOnGem, TurnOffGem, 5, false);
+            _blueGemPool = new ObjectPooling<GemPool>(BlueGemFactoryMethod, TurnOnGem, TurnOffGem, _maxStockPerGem, false);
+            _brownGemPool = new ObjectPooling<GemPool>(BrownGemFactoryMethod, TurnOnGem, TurnOffGem, _maxStockPerGem, false);
+            _greenGemPool = new ObjectPooling<GemPool>(GreenGemFactoryMethod, TurnOnGem, TurnOffGem, _maxStockPerGem, false);
+            _redGemPool = new ObjectPooling<GemPool>(RedGemFactoryMethod, TurnOnGem, TurnOffGem, _maxStockPerGem, false);
+            _whiteGemPool = new ObjectPooling<GemPool>(WhiteGemFactoryMethod, TurnOnGem, TurnOffGem, _maxStockPerGem, false);
+            _yellowGemPool = new ObjectPooling<GemPool>(YellowGemFactoryMethod, TurnOnGem, TurnOffGem, _maxStockPerGem, false);
             _gemPoolList.Add(_blueGemPool);_gemPoolList.Add(_brownGemPool);_gemPoolList.Add(_greenGemPool);
             _gemPoolList.Add(_redGemPool);_gemPoolList.Add(_whiteGemPool);_gemPoolList.Add(_yellowGemPool);
         }

@@ -73,6 +73,7 @@ public class GemBall_Collision : MonoBehaviour, IGemBallRef
             newPosition.x = leftDiff < rightDiff ? leftBound : rightBound;
 
             if (newPosition.x > _maxHorizontalPosEven) newPosition.x = _maxHorizontalPosEven;
+            else if (newPosition.x < _horizontalOffsetEven) newPosition.x = _horizontalOffsetEven;
             Debug.Log($"Compare Even: {leftDiff} -- {rightDiff}");
         }
         else // if odd row
@@ -101,6 +102,7 @@ public class GemBall_Collision : MonoBehaviour, IGemBallRef
             newPosition.x = leftDiff < rightDiff ? leftBound : rightBound;
             
             if (newPosition.x > _maxHorizontalPosOdd) newPosition.x = _maxHorizontalPosOdd;
+            else if (newPosition.x < _horizontalOffsetOdd) newPosition.x = _horizontalOffsetOdd;
             Debug.Log($"Compare Even: {leftDiff} -- {rightDiff}");
         }
             

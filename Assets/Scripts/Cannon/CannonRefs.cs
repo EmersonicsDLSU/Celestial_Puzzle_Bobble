@@ -41,17 +41,13 @@ public class CannonRefs : MonoBehaviour
         _collider = GetComponentInChildren<BoxCollider2D>();
         if (_collider == null)
         {
-#if UNITY_EDITOR
             Debug.LogError("Missing 'Collider2D' script!");
-#endif
         }
 
         _cannonStatus = GetComponentInChildren<Cannon_Status>();
         if (_cannonStatus == null)
         {
-#if UNITY_EDITOR
             Debug.LogError("Missing 'Cannon_Status' script!");
-#endif
         }
         else
         {
@@ -61,9 +57,7 @@ public class CannonRefs : MonoBehaviour
         _cannonCollision = GetComponentInChildren<Cannon_Collision>();
         if (_cannonCollision == null)
         {
-#if UNITY_EDITOR
             Debug.LogError("Missing 'Cannon_Collision' script!");
-#endif
         }
         else
         {
@@ -73,9 +67,7 @@ public class CannonRefs : MonoBehaviour
         _cannonMovement = GetComponentInChildren<Cannon_Movement>();
         if (_cannonMovement == null)
         {
-#if UNITY_EDITOR
             Debug.LogError("Missing 'Cannon_Movement' script!");
-#endif
         }
         else
         {
@@ -85,9 +77,7 @@ public class CannonRefs : MonoBehaviour
         _cannonFiring = GetComponentInChildren<Cannon_Firing>();
         if (_cannonFiring == null)
         {
-#if UNITY_EDITOR
             Debug.LogError("Missing 'Cannon_Firing' script!");
-#endif
         }
         else
         {

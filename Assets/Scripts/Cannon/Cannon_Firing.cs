@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Cannon_Firing : MonoBehaviour, ICannonRef
 {
-    [SerializeField]
     private GemSpawner _gemSpawner;
     [SerializeField]
     private Transform _cannonPos;
@@ -14,8 +13,20 @@ public class Cannon_Firing : MonoBehaviour, ICannonRef
     [SerializeField] private float force = 20f;
     // functionality for spawning gem objects
 
+    void Start()
+    {
+        _gemSpawner = FindObjectOfType<GemSpawner>();
+        if (_gemSpawner == null)
+        {
+            Debug.LogError("Missing 'GemSpawner' script!");
+        }
+    }
+
     public void RefUpdate(CannonRefs mainRef)
     {
+        // stop the process
+        if (_gemSpawner == null) return;
+
         // Fire a ball
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -28,9 +39,7 @@ public class Cannon_Firing : MonoBehaviour, ICannonRef
             }
             else
             {
-#if UNITY_EDITOR
                 Debug.LogError($"No Gem Spawner Assigned! {random}");
-#endif
             }
         }
 
@@ -43,9 +52,7 @@ public class Cannon_Firing : MonoBehaviour, ICannonRef
             }
             else
             {
-#if UNITY_EDITOR
                 Debug.LogError($"No Gem Spawner Assigned! {random}");
-#endif
             }
         }
     }
