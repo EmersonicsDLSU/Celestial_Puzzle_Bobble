@@ -21,7 +21,7 @@ public class GemBall_Status : MonoBehaviour, IGemBallRef
         
     }
 
-    EGemBall GetGemID()
+    public EGemBall GetGemID()
     {
         return _gemID;
     }

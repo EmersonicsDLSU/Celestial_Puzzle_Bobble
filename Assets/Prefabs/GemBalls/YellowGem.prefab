@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5414076077904626295}
   - component: {fileID: 3562462005032814612}
   - component: {fileID: 7240556688451195148}
+  - component: {fileID: 5035047097755248589}
   m_Layer: 0
   m_Name: Scripts
   m_TagString: Untagged
@@ -56,6 +57,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 15e41cd8c367b5b498c9cae32060b586, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5035047097755248589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5414076077904626294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2db368d7433aac34ab01c0565a33799e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5414076077993799026
@@ -218,6 +231,7 @@ MonoBehaviour:
   _gemBallStatus: {fileID: 0}
   _gemPoolSc: {fileID: 0}
   _gemBallCollision: {fileID: 0}
+  _gemBallConnections: {fileID: 0}
 --- !u!50 &8469264779078278627
 Rigidbody2D:
   serializedVersion: 4

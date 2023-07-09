@@ -11,6 +11,7 @@ public class GemBallRefs : MonoBehaviour
     [HideInInspector] public GemBall_Status _gemBallStatus;
     [HideInInspector] public GemPool _gemPoolSc;
     [HideInInspector] public GemBall_Collision _gemBallCollision;
+    [HideInInspector] public GemBall_Connections _gemBallConnections;
 
     void Awake()
     {
@@ -29,6 +30,10 @@ public class GemBallRefs : MonoBehaviour
         {
             _componentList.Add(_gemBallCollision);
         }
+        if (_gemBallConnections != null)
+        {
+            _componentList.Add(_gemBallConnections);
+        }
     }
 
     private void GetReferences()
@@ -37,25 +42,19 @@ public class GemBallRefs : MonoBehaviour
         _rb = GetComponentInChildren<Rigidbody2D>();
         if (_rb == null)
         {
-#if UNITY_EDITOR
             Debug.LogError("Missing 'Rigidbody' script!");
-#endif
         }
 
         _collider = GetComponentInChildren<CircleCollider2D>();
         if (_collider == null)
         {
-#if UNITY_EDITOR
             Debug.LogError("Missing 'CircleCollider2D' script!");
-#endif
         }
 
         _gemBallStatus = GetComponentInChildren<GemBall_Status>();
         if (_gemBallStatus == null)
         {
-#if UNITY_EDITOR
             Debug.LogError("Missing 'GemBall' script!");
-#endif
         }
         else
         {
@@ -65,9 +64,7 @@ public class GemBallRefs : MonoBehaviour
         _gemPoolSc = GetComponentInChildren<GemPool>();
         if (_gemPoolSc == null)
         {
-#if UNITY_EDITOR
             Debug.LogError("Missing 'GemPool' script!");
-#endif
         }
         else
         {
@@ -77,13 +74,21 @@ public class GemBallRefs : MonoBehaviour
         _gemBallCollision = GetComponentInChildren<GemBall_Collision>();
         if (_gemBallCollision == null)
         {
-#if UNITY_EDITOR
             Debug.LogError("Missing 'GemBall_Collision' script!");
-#endif
         }
         else
         {
             _gemBallCollision.SetGemBallRef(this);
+        }
+        
+        _gemBallConnections = GetComponentInChildren<GemBall_Connections>();
+        if (_gemBallConnections == null)
+        {
+            Debug.LogError("Missing 'GemBall_Connections' script!");
+        }
+        else
+        {
+            _gemBallConnections.SetGemBallRef(this);
         }
     }
 
@@ -92,7 +97,6 @@ public class GemBallRefs : MonoBehaviour
         // controls the update of all components
         foreach (var comp in _componentList)
         {
-            
             comp.RefUpdate(this);   
         }
     }
