@@ -6,7 +6,7 @@ using UnityEngine.Pool;
 public class GemSpawner : MonoBehaviour
 {
     [SerializeField] private Transform _spawnLocation;
-    [SerializeField] private Transform _sourceLocation;
+    [SerializeField] public Transform _sourceLocation;
     [SerializeField] private GameObject _bluePrefab;
     [SerializeField] private GameObject _brownPrefab;
     [SerializeField] private GameObject _greenPrefab;

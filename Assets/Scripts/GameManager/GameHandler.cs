@@ -11,6 +11,7 @@ public class GameHandler : MonoBehaviour
     private GemSpawner _gemSpawner;
     public GemBallRefs[,] gridRefs { get; private set; }
     public int _comboLength = 3;
+    [HideInInspector] public List<EGemBall> _existingBallTypes = new List<EGemBall>();
 
     // Start is called before the first frame update
     void Awake()
@@ -48,7 +49,7 @@ public class GameHandler : MonoBehaviour
         {'W', EGemBall.WHITE},
         {'Y', EGemBall.YELLOW},
         {'Z', EGemBall.NONE}
-};
+    };
 
     private void InitializeStartingBalls()
     {
@@ -128,7 +129,33 @@ public class GameHandler : MonoBehaviour
         AssignStartingAdjacentBalls();
         
     }
-    
+
+    public void CheckExistingBallTypes()
+    {
+        _existingBallTypes.Clear();
+
+        // Iterate through each element in gridRefs
+        for (int i = 0; i < gridRefs.GetLength(0); i++)
+        {
+            for (int j = 0; j < gridRefs.GetLength(1); j++)
+            {
+                GemBallRefs ballRef = gridRefs[i, j];
+                if (ballRef == null) continue;
+                EGemBall ballType = ballRef._gemBallStatus.GetGemID();
+
+                // Exclude NONE and ENUM_SIZE from the check
+                if (ballType != EGemBall.NONE && ballType != EGemBall.ENUM_SIZE)
+                {
+                    // Check if the ballType is already in the _existingBallTypes list
+                    if (!_existingBallTypes.Contains(ballType))
+                    {
+                        _existingBallTypes.Add(ballType);
+                    }
+                }
+            }
+        }
+    }
+
     private void AssignStartingAdjacentBalls()
     {
         // Assign the adjacent balls for each ball

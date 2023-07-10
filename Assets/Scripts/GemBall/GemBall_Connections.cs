@@ -156,6 +156,7 @@ public class GemBall_Connections : MonoBehaviour, IGemBallRef
             var g = FindObjectOfType<GameHandler>();
             int row = (int) g.GetCurLD()._maxVerticalPos - Mathf.FloorToInt(ball.transform.position.y);
             int col = Mathf.FloorToInt(ball.transform.position.x);
+            Debug.Log($"Delete: [{row}:{col}]");
             // remove it from the gridsRef
             FindObjectOfType<GameHandler>().gridRefs[row, col] = null;
             // return the pool object
