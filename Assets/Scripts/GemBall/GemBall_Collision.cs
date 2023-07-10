@@ -5,14 +5,19 @@ using UnityEngine;
 public class GemBall_Collision : MonoBehaviour, IGemBallRef
 {
     public GemBallRefs _gemBallRef { get; private set; }
-    private const float _maxVerticalPos = 12.0f;
-    private const float _maxHorizontalPosOdd = 9.75f;
-    private const float _maxHorizontalPosEven = 10.25f;
-    private const float _horizontalOffsetOdd = 0.75f;
-    private const float _horizontalOffsetEven = 0.25f;
+    private GameHandler _gameHandler;
 
     private Vector3 _lastVelocity;
-        
+
+    public void Awake()
+    {
+        _gameHandler = FindObjectOfType<GameHandler>();
+        if (_gameHandler == null)
+        {
+            Debug.LogError("Missing 'GameHandler' script!");
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (_gemBallRef._gemBallStatus.GetMobility() != EGemBallMobility.MOVING) return;
@@ -38,6 +43,12 @@ public class GemBall_Collision : MonoBehaviour, IGemBallRef
 
     private void SnapPosition()
     {
+        float _maxVerticalPos = _gameHandler.GetCurLD()._maxVerticalPos;
+        float _maxHorizontalPosOdd = _gameHandler.GetCurLD()._maxHorizontalPosOdd;
+        float _maxHorizontalPosEven = _gameHandler.GetCurLD()._maxHorizontalPosEven;
+        float _horizontalOffsetOdd = _gameHandler.GetCurLD()._horizontalOffsetOdd;
+        float _horizontalOffsetEven = _gameHandler.GetCurLD()._horizontalOffsetEven;
+
         Vector3 ogPos = transform.position;
         Vector3 newPosition = Vector3.zero;
             
@@ -108,6 +119,19 @@ public class GemBall_Collision : MonoBehaviour, IGemBallRef
             
         // assign the new position for the ball; snap reposition
         transform.position = newPosition;
+
+        // convert currentPos to gridRefs index
+        int row = (int) _maxVerticalPos - Mathf.FloorToInt(newPosition.y);
+        int col = Mathf.FloorToInt(newPosition.x);
+        // assign it to the gridRefs
+        FindObjectOfType<GameHandler>().gridRefs[row, col] = _gemBallRef;
+        // assign the adjacent ball on based on its new location
+        _gemBallRef._gemBallConnections.CheckNeighboringBalls(FindObjectOfType<GameHandler>(), row, col);
+        Debug.Log($"Index: [{row}, {col}]");
+        _gemBallRef._gemBallConnections.ShowAdjacentBalls();
+
+        // check for possible combination / collapse
+        _gemBallRef._gemBallConnections.PerformBFS(_gemBallRef);
 
         //Debug.Log($"Ball Hit At: {ogPos}");
         //Debug.Log($"Ball Place At: {newPosition}");

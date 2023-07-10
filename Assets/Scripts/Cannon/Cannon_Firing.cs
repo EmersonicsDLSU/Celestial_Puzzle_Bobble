@@ -33,7 +33,8 @@ public class Cannon_Firing : MonoBehaviour, ICannonRef
             int random = Random.Range(0, (int)EGemBall.ENUM_SIZE);
             if (_gemSpawner.GetObjectPool((EGemBall) random) != null)
             {
-                GemPool gem = _gemSpawner.GetObjectPool((EGemBall) random).GetObject();
+               // GemPool gem = _gemSpawner.GetObjectPool((EGemBall) random).GetObject();
+                GemPool gem = _gemSpawner.GetObjectPool(EGemBall.YELLOW).GetObject();
                 gem._gemBallRef.transform.position = _cannonPos.position;
                 gem.Launch(transform.parent.transform.up, force);
             }

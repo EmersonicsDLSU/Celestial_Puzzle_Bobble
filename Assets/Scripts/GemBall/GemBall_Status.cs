@@ -9,6 +9,7 @@ public class GemBall_Status : MonoBehaviour, IGemBallRef
 
     private EGemBallMobility _gemMobility = EGemBallMobility.NONE;
     public GemBallRefs _gemBallRef { get; private set; }
+    [HideInInspector] public bool _boundToBeDeleted = false;
 
     void Start()
     {

@@ -3,13 +3,8 @@ using UnityEngine.Pool;
 
 public class GemPool : MonoBehaviour, IGemBallRef
 {
-    private ObjectPooling<GemPool> _objectPool;
     public GemBallRefs _gemBallRef { get; private set; }
-
-    public void AssignObjectPool(ObjectPooling<GemPool> objectPool)
-    {
-        _objectPool = objectPool;
-    }
+    
     
     public void Launch(Vector2 direction, float force)
     {
@@ -18,13 +13,9 @@ public class GemPool : MonoBehaviour, IGemBallRef
         _gemBallRef._gemBallStatus.SetMobility(EGemBallMobility.MOVING);
     }
 
-    void OnCollisionEnter(Collision collision)
+    public void ReturnPool()
     {
-        ContactPoint contact = collision.contacts[0];
-        Quaternion rotation = collision.transform.rotation;
-        Vector3 position = contact.point;
-
-        _objectPool.ReturnObject(this);
+        FindObjectOfType<GemSpawner>().GetObjectPool(_gemBallRef._gemBallStatus.GetGemID()).ReturnObject(this);
     }
 
     public void RefUpdate(GemBallRefs mainRef)

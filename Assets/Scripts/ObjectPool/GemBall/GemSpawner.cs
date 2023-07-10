@@ -68,8 +68,6 @@ public class GemSpawner : MonoBehaviour
     {
         GameObject obj = Instantiate(_bluePrefab) as GameObject;
         GemPool objScript = obj.GetComponentInChildren<GemPool>();
-        // attach a reference of the objectPool to the pool object
-        objScript.AssignObjectPool(_blueGemPool);
 
         TranslateToSource(obj);
 
@@ -79,8 +77,6 @@ public class GemSpawner : MonoBehaviour
     {
         GameObject obj = Instantiate(_brownPrefab) as GameObject;
         GemPool objScript = obj.GetComponentInChildren<GemPool>();
-        // attach a reference of the objectPool to the pool object
-        objScript.AssignObjectPool(_brownGemPool);
 
         TranslateToSource(obj);
 
@@ -90,8 +86,6 @@ public class GemSpawner : MonoBehaviour
     {
         GameObject obj = Instantiate(_greenPrefab) as GameObject;
         GemPool objScript = obj.GetComponentInChildren<GemPool>();
-        // attach a reference of the objectPool to the pool object
-        objScript.AssignObjectPool(_greenGemPool);
 
         TranslateToSource(obj);
 
@@ -101,8 +95,6 @@ public class GemSpawner : MonoBehaviour
     {
         GameObject obj = Instantiate(_redPrefab) as GameObject;
         GemPool objScript = obj.GetComponentInChildren<GemPool>();
-        // attach a reference of the objectPool to the pool object
-        objScript.AssignObjectPool(_redGemPool);
 
         TranslateToSource(obj);
 
@@ -112,8 +104,6 @@ public class GemSpawner : MonoBehaviour
     {
         GameObject obj = Instantiate(_whitePrefab) as GameObject;
         GemPool objScript = obj.GetComponentInChildren<GemPool>();
-        // attach a reference of the objectPool to the pool object
-        objScript.AssignObjectPool(_whiteGemPool);
 
         TranslateToSource(obj);
 
@@ -123,8 +113,6 @@ public class GemSpawner : MonoBehaviour
     {
         GameObject obj = Instantiate(_yellowPrefab) as GameObject;
         GemPool objScript = obj.GetComponentInChildren<GemPool>();
-        // attach a reference of the objectPool to the pool object
-        objScript.AssignObjectPool(_yellowGemPool);
 
         TranslateToSource(obj);
 
@@ -165,6 +153,10 @@ public class GemSpawner : MonoBehaviour
             GemBallRefs gemParent = currentTransform.GetComponent<GemBallRefs>();
             if (gemParent != null)
             {
+                // clear the adjacent balls
+                gemParent._gemBallConnections.AdjacentBalls.Clear();
+                // reset deletion status
+                gemParent._gemBallStatus._boundToBeDeleted = false;
                 // parent and reposition(hidden) the recently borrowed pool object
                 gemParent.transform.SetParent(_sourceLocation, false);
                 gemParent.gameObject.SetActive(false);

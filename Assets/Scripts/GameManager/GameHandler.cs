@@ -5,15 +5,17 @@ using UnityEngine;
 
 public class GameHandler : MonoBehaviour
 {
-    [SerializeField] private LevelDesign _levelDesign;
+    [SerializeField] private LevelDesign _currentLevelDesign;
     [SerializeField] private GameObject _playerParent;
     [SerializeField] private GameObject _levelParent;
     private GemSpawner _gemSpawner;
+    public GemBallRefs[,] gridRefs { get; private set; }
+    public int _comboLength = 3;
 
     // Start is called before the first frame update
     void Awake()
     {
-        if (_levelDesign == null) Debug.LogError("Missing 'LevelDesign' script!");
+        if (_currentLevelDesign == null) Debug.LogError("Missing 'LevelDesign' script!");
         if (_playerParent == null) Debug.LogError("Missing 'Player Parent' gameObject!");
         if (_levelParent == null) Debug.LogError("Missing 'Player Parent' gameObject!");
     }
@@ -25,12 +27,12 @@ public class GameHandler : MonoBehaviour
         {
             Debug.LogError("Missing 'GemSpawner' script!");
         }
-        if (_levelDesign != null && _playerParent != null && _levelParent != null)
+        if (_currentLevelDesign != null && _playerParent != null && _levelParent != null)
         {
             // position the player in the world
-            Instantiate(_levelDesign._playerShooterPrefab, _playerParent.transform.position, Quaternion.identity);
+            Instantiate(_currentLevelDesign._playerShooterPrefab, _playerParent.transform.position, Quaternion.identity);
             // position the level in the world
-            Instantiate(_levelDesign._tileMapPrefab, _levelParent.transform.position, Quaternion.identity);
+            Instantiate(_currentLevelDesign._tileMapPrefab, _levelParent.transform.position, Quaternion.identity);
             // assign the starting balls of the level design
             InitializeStartingBalls();
         }
@@ -53,18 +55,18 @@ public class GameHandler : MonoBehaviour
         // grid for the balls starting positions
         EGemBall[,] grid;
 
-        string fileContents = _levelDesign._txtStartingBalls.text;
+        string fileContents = _currentLevelDesign._txtStartingBalls.text;
         // retrieve each of the lines from the txt file
         string[] lines = fileContents.Split('\n');
 
-        grid = new EGemBall[_levelDesign._maxRows, _levelDesign._maxColumns];
+        grid = new EGemBall[_currentLevelDesign._maxRows, _currentLevelDesign._maxColumns];
 
         // iterate each of the lines
-        for (int row = 0; row < _levelDesign._maxRows; row++)
+        for (int row = 0; row < _currentLevelDesign._maxRows; row++)
         {
             // iterate each of the elements in the current line
             string[] elements = lines[row].Trim().Split(' ');
-            for (int col = 0; col < _levelDesign._maxColumns; col++)
+            for (int col = 0; col < _currentLevelDesign._maxColumns; col++)
             {
                 char charValue = elements[col][0];
                 // Convert the initial char to the corresponding EGemBall enum value
@@ -83,12 +85,12 @@ public class GameHandler : MonoBehaviour
         int verticalMax = 12; // maximum height
         float horizontalOffsetEven = 0.25f; // even rows
         float horizontalOffsetOdd = 0.75f; // odd rows
-        GemBallRefs [,] gridRefs = new GemBallRefs[_levelDesign._maxRows, _levelDesign._maxColumns];
+        gridRefs = new GemBallRefs[_currentLevelDesign._maxRows, _currentLevelDesign._maxColumns];
 
-        for (int row = 0; row < _levelDesign._maxRows; row++)
+        for (int row = 0; row < _currentLevelDesign._maxRows; row++)
         {
             // iterate each of the balls based on the template
-            for (int col = 0; col < _levelDesign._maxColumns; col++)
+            for (int col = 0; col < _currentLevelDesign._maxColumns; col++)
             {
                 // get the color of the ball to borrow
                 EGemBall gemBallEnum = grid[row, col];
@@ -121,83 +123,42 @@ public class GameHandler : MonoBehaviour
                 }
             }
         }
-
-        // assign the adjacent balls to each of the starting balls in the level
-        AssignAdjacentBalls(ref gridRefs);
+        
+        // assign the adjacent balls of this ball
+        AssignStartingAdjacentBalls();
+        
     }
-
-    private void AssignAdjacentBalls(ref GemBallRefs[,] grid)
+    
+    private void AssignStartingAdjacentBalls()
     {
         // Assign the adjacent balls for each ball
-        for (int row = 0; row < _levelDesign._maxRows; row++)
+        for (int row = 0; row < GetCurLD()._maxRows; row++)
         {
-            for (int col = 0; col < _levelDesign._maxColumns; col++)
+            for (int col = 0; col < GetCurLD()._maxColumns; col++)
             {
-                if (grid[row, col] == null || grid[row, col]._gemBallConnections == null) continue;
-                GemBall_Connections currentBall = grid[row, col]._gemBallConnections;
+                if (gridRefs[row, col] == null || gridRefs[row, col]._gemBallConnections == null) continue;
+                GemBall_Connections currentBall = gridRefs[row, col]._gemBallConnections;
 
-                Debug.Log($"Index: [{row},{col}]");
+                //Debug.Log($"Index: [{row},{col}]");
 
-                // Check neighboring balls and add them to the adjacent balls list
-                // Even row
-                if (row % 2 == 0)
-                {
-                    if (col > 0 && grid[row, col - 1] != null) // Check left ball
-                        currentBall.AddAdjacentBall(grid[row, col - 1]);
-
-                    if (col < _levelDesign._maxColumns - 1 && grid[row, col + 1] != null) // Check right ball
-                        currentBall.AddAdjacentBall(grid[row, col + 1]);
-
-                    if (row > 0) // Check upper-left and upper-right balls
-                    {
-                        if (col > 0 && grid[row - 1, col - 1] != null)
-                            currentBall.AddAdjacentBall(grid[row - 1, col - 1]);
-
-                        if (col < _levelDesign._maxColumns - 1 && grid[row - 1, col] != null)
-                            currentBall.AddAdjacentBall(grid[row - 1, col]);
-                    }
-
-                    if (row < _levelDesign._maxRows - 1) // Check lower-left and lower-right balls
-                    {
-                        if (col > 0 && grid[row + 1, col - 1] != null)
-                            currentBall.AddAdjacentBall(grid[row + 1, col - 1]);
-
-                        if (col < _levelDesign._maxColumns - 1 && grid[row + 1, col] != null)
-                            currentBall.AddAdjacentBall(grid[row + 1, col]);
-                    }
-                }
-                // Odd row
-                else
-                {
-                    if (col > 0 && grid[row, col - 1] != null) // Check left ball
-                        currentBall.AddAdjacentBall(grid[row, col - 1]);
-
-                    if (col < _levelDesign._maxColumns - 1 && grid[row, col + 1] != null) // Check right ball
-                        currentBall.AddAdjacentBall(grid[row, col + 1]);
-
-                    if (row > 0) // Check upper-left and upper-right balls
-                    {
-                        if (grid[row - 1, col] != null)
-                            currentBall.AddAdjacentBall(grid[row - 1, col]);
-
-                        if (grid[row - 1, col + 1] != null)
-                            currentBall.AddAdjacentBall(grid[row - 1, col + 1]);
-                    }
-
-                    if (row < _levelDesign._maxRows - 1) // Check lower-left and lower-right balls
-                    {
-                        if (grid[row + 1, col] != null)
-                            currentBall.AddAdjacentBall(grid[row + 1, col]);
-
-                        if (grid[row + 1, col + 1] != null)
-                            currentBall.AddAdjacentBall(grid[row + 1, col + 1]);
-                    }
-                }
-
-                currentBall.ShowAdjacentBalls();
+                currentBall.CheckNeighboringBalls(this, row, col);
+            
+                //currentBall.ShowAdjacentBalls();
             }
         }
+    }
 
+    public LevelDesign GetCurLD()
+    {
+        return _currentLevelDesign;
+    }
+    public GameObject GetPP()
+    {
+        return _playerParent;
+    }
+    public GameObject GetLP()
+    {
+        return _levelParent;
     }
 
 }
