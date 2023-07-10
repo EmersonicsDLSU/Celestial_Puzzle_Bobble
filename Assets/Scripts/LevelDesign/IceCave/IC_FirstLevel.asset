@@ -17,3 +17,8 @@ MonoBehaviour:
   _playerShooterPrefab: {fileID: 4476679731690160350, guid: fe55bebc540efeb418207c76a0adc616, type: 3}
   _maxColumns: 11
   _maxRows: 10
+  _maxVerticalPos: 12
+  _maxHorizontalPosOdd: 9.75
+  _maxHorizontalPosEven: 10.25
+  _horizontalOffsetOdd: 0.75
+  _horizontalOffsetEven: 0.25

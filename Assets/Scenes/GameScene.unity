@@ -1034,9 +1034,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3ce5bfce05a9b547a31960f9043be29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _levelDesign: {fileID: 11400000, guid: 198c94c50139156478564fa3134f43af, type: 2}
+  _currentLevelDesign: {fileID: 11400000, guid: 198c94c50139156478564fa3134f43af, type: 2}
   _playerParent: {fileID: 1100620309}
   _levelParent: {fileID: 1714400977}
+  _comboLength: 3
 --- !u!4 &1656501185
 Transform:
   m_ObjectHideFlags: 0
@@ -1209,6 +1210,10 @@ PrefabInstance:
       propertyPath: _spawnLocation
       value: 
       objectReference: {fileID: 116669764}
+    - target: {fileID: 6066527902450029451, guid: f31f900e362209a4c92de50eeb731703, type: 3}
+      propertyPath: _maxStockPerGem
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 6066527902450029451, guid: f31f900e362209a4c92de50eeb731703, type: 3}
       propertyPath: _sourceLocation
       value: 
