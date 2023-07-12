@@ -4,7 +4,17 @@ using UnityEngine.Audio;
 public enum SoundCode
 {
     NONE = -1,
-    CRY_BULBASAUR = 0,
+    MAIN_MENU_BG,
+    CONTINUE,
+    GAME_OVER,
+    SHOOT,
+    SHOOT2,
+    SHOOT3,
+    COLLAPSE,
+    COLLAPSE2,
+    COLLAPSE3,
+    READY,
+    HURRY_UP,
     ENUM_SIZE
 }
 

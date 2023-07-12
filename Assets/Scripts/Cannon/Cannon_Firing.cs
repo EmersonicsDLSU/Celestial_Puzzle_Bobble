@@ -57,10 +57,18 @@ public class Cannon_Firing : MonoBehaviour, ICannonRef
         _loadedBall.transform.position = _loadedBallPos.position;
         _loadedBall.transform.parent = _loadedBallPos;
         // random pick based on the existing balls in the grid; for the nextBall
-        int random = Random.Range(0, _gameHandler._existingBallTypes.Count);
-        _nextBall = _gemSpawner.GetObjectPool(_gameHandler._existingBallTypes[random]).GetObject()._gemBallRef;
-        _nextBall.transform.position = _nextBallPos.position;
-        _nextBall.transform.parent = _nextBallPos;
+        if (_gameHandler._existingBallTypes.Count > 0)
+        {
+            int random = Random.Range(0, _gameHandler._existingBallTypes.Count);
+            _nextBall = _gemSpawner.GetObjectPool(_gameHandler._existingBallTypes[random]).GetObject()._gemBallRef;
+            _nextBall.transform.position = _nextBallPos.position;
+            _nextBall.transform.parent = _nextBallPos;
+        }
+        else
+        {
+            //TODO: Win trigger code
+            FindObjectOfType<AudioManager>().Play(SoundCode.CONTINUE);
+        }
     }
     
     public void RefUpdate(CannonRefs mainRef)
@@ -72,6 +80,8 @@ public class Cannon_Firing : MonoBehaviour, ICannonRef
         // Fire a ball
         if (Input.GetKeyDown(KeyCode.Space) && _canShoot)
         {
+            // play shoot sound
+            FindObjectOfType<AudioManager>().PlayShootSFX();
             _canShoot = false;
             if (_gemSpawner.GetObjectPool(_loadedBall._gemBallStatus.GetGemID()) != null)
             {

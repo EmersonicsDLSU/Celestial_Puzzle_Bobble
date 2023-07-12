@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CannonRefs : MonoBehaviour
-{ private List<ICannonRef> _componentList;
+{ 
+    private List<ICannonRef> _componentList;
     // object's components
     [HideInInspector] public BoxCollider2D _collider;
     [HideInInspector] public Cannon_Status _cannonStatus;

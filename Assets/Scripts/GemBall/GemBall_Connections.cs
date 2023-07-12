@@ -98,7 +98,7 @@ public class GemBall_Connections : MonoBehaviour, IGemBallRef
                 {
                     if (!visited.Contains(adjacentBall) && adjacentBall._gemBallStatus.GetGemID() == colorToMatch)
                     {
-                        Debug.Log($"Found a Matching Color: {colorToMatch}");
+                        //Debug.Log($"Found a Matching Color: {colorToMatch}");
                         currComboCount++;
                         nodeQueue.Enqueue(adjacentBall);
                         // bound to be deleted
@@ -108,7 +108,7 @@ public class GemBall_Connections : MonoBehaviour, IGemBallRef
             }
         }
 
-        Debug.Log($"ComboCount: {currComboCount}");
+        //Debug.Log($"ComboCount: {currComboCount}");
         // check if there's a valid combination
         if (currComboCount >= FindObjectOfType<GameHandler>()._comboLength)
         {
@@ -145,7 +145,7 @@ public class GemBall_Connections : MonoBehaviour, IGemBallRef
                             prospectDeletes.Add(adjacentBall);
                             // bound to be deleted
                             adjacentBall._gemBallStatus._boundToBeDeleted = true;
-                            Debug.Log($"Add to Prospect!");
+                            //Debug.Log($"Add to Prospect!");
                         }
                     }
                 }
@@ -158,6 +158,9 @@ public class GemBall_Connections : MonoBehaviour, IGemBallRef
             // return the pool object
             ball._gemPoolSc.ReturnPool();
         }
+        // play collapse vfx
+        if (prospectDeletes.Count > 0)
+            FindObjectOfType<AudioManager>().PlayCollapseSFX();
 
         // verify all balls neighbors
         FindObjectOfType<GameHandler>().VerifyAllBallsNeighbors();
