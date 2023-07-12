@@ -158,6 +158,8 @@ public class GemSpawner : MonoBehaviour
                 // remove position in grid
                 gemParent._gemBallStatus.position.Row = -1;
                 gemParent._gemBallStatus.position.Col = -1;
+                // change mobility to none
+                gemParent._gemBallStatus.SetMobility(EGemBallMobility.NONE);
                 // parent and reposition(hidden) the recently borrowed pool object
                 gemParent.transform.SetParent(_sourceLocation, false);
                 gemParent.gameObject.SetActive(false);

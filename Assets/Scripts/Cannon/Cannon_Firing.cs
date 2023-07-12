@@ -70,16 +70,19 @@ public class Cannon_Firing : MonoBehaviour, ICannonRef
             FindObjectOfType<AudioManager>().Play(SoundCode.CONTINUE);
         }
     }
-    
+
+    private float _timer = 0.0f;
+    [SerializeField]private float _timerThreshold = 1.0f;
     public void RefUpdate(CannonRefs mainRef)
     {
         // stop the process
         if (_gemSpawner == null) return;
-        
 
+        _timer += Time.deltaTime;
         // Fire a ball
-        if (Input.GetKeyDown(KeyCode.Space) && _canShoot)
+        if (Input.GetKeyDown(KeyCode.Space) && _canShoot && _timer >= _timerThreshold)
         {
+            _timer = 0;
             // play shoot sound
             FindObjectOfType<AudioManager>().PlayShootSFX();
             _canShoot = false;

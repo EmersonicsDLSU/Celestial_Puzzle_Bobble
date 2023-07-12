@@ -17,6 +17,7 @@ public class GemPool : MonoBehaviour, IGemBallRef
     {
         var g = FindObjectOfType<GameHandler>();
         GemBall_Status.BallPosition pos = _gemBallRef._gemBallStatus.position;
+        // if row and col is invalid
         if (pos.Row < 0 || pos.Col < 0 || g.gridRefs[pos.Row, pos.Col] == null) return; 
         // remove it from the gridsRef
         //Debug.Log($"Delete: [{pos.Row}:{pos.Col}]");
