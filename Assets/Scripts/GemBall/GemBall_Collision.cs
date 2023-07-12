@@ -134,6 +134,9 @@ public class GemBall_Collision : MonoBehaviour, IGemBallRef
 
         // check for possible combination / collapse
         _gemBallRef._gemBallConnections.PerformBFS(_gemBallRef);
+        // wait for the collapse to finish; before player can shoot again
+        FindObjectOfType<Cannon_Firing>()._canShoot = true;
+
         _gameHandler.ShowGridAndAdjacencies();
         //Debug.Log($"Ball Hit At: {ogPos}");
         //Debug.Log($"Ball Place At: {newPosition}");

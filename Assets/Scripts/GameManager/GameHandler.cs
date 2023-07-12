@@ -32,9 +32,11 @@ public class GameHandler : MonoBehaviour
         if (_currentLevelDesign != null && _playerParent != null && _levelParent != null)
         {
             // position the player in the world
-            Instantiate(_currentLevelDesign._playerShooterPrefab, _playerParent.transform.position, Quaternion.identity);
+            GameObject player = Instantiate(_currentLevelDesign._playerShooterPrefab, _playerParent.transform.position, Quaternion.identity);
+            player.transform.parent = _playerParent.transform;
             // position the level in the world
-            Instantiate(_currentLevelDesign._tileMapPrefab, _levelParent.transform.position, Quaternion.identity);
+            GameObject tileMapLevel = Instantiate(_currentLevelDesign._tileMapPrefab, _levelParent.transform.position, Quaternion.identity);
+            tileMapLevel.transform.parent = _levelParent.transform;
             // assign the starting balls of the level design
             InitializeStartingBalls();
         }

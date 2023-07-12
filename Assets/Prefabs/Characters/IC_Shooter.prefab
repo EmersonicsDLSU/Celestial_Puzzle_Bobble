@@ -59,7 +59,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cannon: {fileID: 4476679732039999421}
-  rotationSpeed: 40
+  _angleLimit: 80
+  _rotationSpeed: 80
 --- !u!114 &4476679730210636710
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -14,7 +14,8 @@ public class Cannon_Firing : MonoBehaviour, ICannonRef
 
     public CannonRefs _cannonRef { get; private set; }
     
-    [SerializeField] private float force = 20f;
+    [SerializeField] private float _force = 20f;
+    [HideInInspector] public bool _canShoot = true;
     // functionality for spawning gem objects
 
     void Start()
@@ -61,20 +62,17 @@ public class Cannon_Firing : MonoBehaviour, ICannonRef
         _nextBall.transform.position = _nextBallPos.position;
         _nextBall.transform.parent = _nextBallPos;
     }
-
-    float _timer = 0.0f, _threshold = 1.0f;
+    
     public void RefUpdate(CannonRefs mainRef)
     {
         // stop the process
         if (_gemSpawner == null) return;
-
-        _timer += Time.deltaTime;
+        
 
         // Fire a ball
-        if (Input.GetKeyDown(KeyCode.Space) && _timer > _threshold)
+        if (Input.GetKeyDown(KeyCode.Space) && _canShoot)
         {
-            _timer = 0.0f;
-            //
+            _canShoot = false;
             if (_gemSpawner.GetObjectPool(_loadedBall._gemBallStatus.GetGemID()) != null)
             {
                 StartCoroutine(DelayShot());
@@ -98,7 +96,7 @@ public class Cannon_Firing : MonoBehaviour, ICannonRef
             }
         }
     }
-    
+
     private float delayTime = 0.5f; // Delay time in seconds
     IEnumerator DelayShot()
     {
@@ -106,12 +104,13 @@ public class Cannon_Firing : MonoBehaviour, ICannonRef
         GemPool gem = _loadedBall._gemPoolSc;
         gem._gemBallRef.transform.position = _loadedBallPos.position;
         gem._gemBallRef.transform.parent = _gemSpawner._sourceLocation;
-        gem.Launch(transform.parent.transform.up, force);
+        gem.Launch(transform.parent.transform.up, _force);
 
         // a delay to avoid collision
         yield return new WaitForSeconds(delayTime);
         LoadNewBall();
     }
+
     public void SetCannonRef(CannonRefs _cannonRef)
     {
         this._cannonRef = _cannonRef;
