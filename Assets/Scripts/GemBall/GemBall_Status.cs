@@ -10,10 +10,17 @@ public class GemBall_Status : MonoBehaviour, IGemBallRef
     private EGemBallMobility _gemMobility = EGemBallMobility.NONE;
     public GemBallRefs _gemBallRef { get; private set; }
     [HideInInspector] public bool _boundToBeDeleted = false;
+    [HideInInspector] public bool _isVisitedForConnectivity = false;
+    public class BallPosition {
+        public int Row { get; set; }
+        public int Col { get; set; }
+    }
+
+    public BallPosition position = new BallPosition();
 
     void Start()
     {
-        
+
     }
 
 

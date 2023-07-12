@@ -15,6 +15,12 @@ public class GemPool : MonoBehaviour, IGemBallRef
 
     public void ReturnPool()
     {
+        var g = FindObjectOfType<GameHandler>();
+        GemBall_Status.BallPosition pos = _gemBallRef._gemBallStatus.position;
+        if (pos.Row < 0 || pos.Col < 0 || g.gridRefs[pos.Row, pos.Col] == null) return; 
+        // remove it from the gridsRef
+        Debug.Log($"Delete: [{pos.Row}:{pos.Col}]");
+        g.gridRefs[pos.Row, pos.Col] = null;
         FindObjectOfType<GemSpawner>().GetObjectPool(_gemBallRef._gemBallStatus.GetGemID()).ReturnObject(this);
     }
 

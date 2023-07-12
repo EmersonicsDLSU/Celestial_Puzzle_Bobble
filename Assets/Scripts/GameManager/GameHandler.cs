@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameHandler : MonoBehaviour
@@ -126,7 +127,7 @@ public class GameHandler : MonoBehaviour
         }
         
         // assign the adjacent balls of this ball
-        AssignStartingAdjacentBalls();
+        VerifyAllBallsNeighbors();
         
     }
 
@@ -156,7 +157,7 @@ public class GameHandler : MonoBehaviour
         }
     }
 
-    private void AssignStartingAdjacentBalls()
+    public void VerifyAllBallsNeighbors()
     {
         // Assign the adjacent balls for each ball
         for (int row = 0; row < GetCurLD()._maxRows; row++)
@@ -165,12 +166,51 @@ public class GameHandler : MonoBehaviour
             {
                 if (gridRefs[row, col] == null || gridRefs[row, col]._gemBallConnections == null) continue;
                 GemBall_Connections currentBall = gridRefs[row, col]._gemBallConnections;
+                // assign the position in the grid
+                currentBall._gemBallRef._gemBallStatus.position.Row = row;
+                currentBall._gemBallRef._gemBallStatus.position.Col = col;
 
                 //Debug.Log($"Index: [{row},{col}]");
 
+                // check the adjacent ball around the ball
                 currentBall.CheckNeighboringBalls(this, row, col);
-            
+                // verify to know if the ball is not supported; if not then collapse
+                if (!currentBall.CheckConnectivity(currentBall))
+                    currentBall._gemBallRef._gemPoolSc.ReturnPool();
+                // reset visit status of all existing balls in the grid
+                ResetVisitedStateForConnectivity();
                 //currentBall.ShowAdjacentBalls();
+            }
+        }
+    }
+    private void ResetVisitedStateForConnectivity()
+    {
+        // reset visit status for connectivity check
+        for (int row = 0; row < GetCurLD()._maxRows; row++)
+        {
+            for (int col = 0; col < GetCurLD()._maxColumns; col++)
+            {
+                if (gridRefs[row, col] == null || gridRefs[row, col]._gemBallConnections == null) continue;
+                GemBall_Status status = gridRefs[row, col]._gemBallStatus;
+                status._isVisitedForConnectivity = false;
+            }
+        }
+    }
+
+    public void ShowGridAndAdjacencies()
+    {
+        for (int i = 0; i < GetCurLD()._maxRows; i++)
+        {
+            for (int j = 0; j < GetCurLD()._maxColumns; j++)
+            {
+                if (gridRefs[i, j] == null) continue;
+                Debug.Log($"Position: [{i}:{j}] COLOR: {gridRefs[i,j]._gemBallStatus.GetGemID()}");
+                string temp = $"Neighbors: ";
+                for (int k = 0; k < gridRefs[i,j]._gemBallConnections.AdjacentBalls.Count; k++)
+                {
+                    temp += $" {gridRefs[i, j]._gemBallConnections.AdjacentBalls[k]._gemBallStatus.GetGemID()},";
+                }
+                Debug.Log(temp);
             }
         }
     }

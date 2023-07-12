@@ -154,9 +154,10 @@ public class GemSpawner : MonoBehaviour
             if (gemParent != null)
             {
                 // clear the adjacent balls
-                gemParent._gemBallConnections.AdjacentBalls.Clear();
-                // reset deletion status
-                gemParent._gemBallStatus._boundToBeDeleted = false;
+                gemParent._gemBallConnections.RemoveAllAdjacentBalls();
+                // remove position in grid
+                gemParent._gemBallStatus.position.Row = -1;
+                gemParent._gemBallStatus.position.Col = -1;
                 // parent and reposition(hidden) the recently borrowed pool object
                 gemParent.transform.SetParent(_sourceLocation, false);
                 gemParent.gameObject.SetActive(false);

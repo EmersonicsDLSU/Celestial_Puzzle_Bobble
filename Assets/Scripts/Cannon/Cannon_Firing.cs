@@ -35,12 +35,12 @@ public class Cannon_Firing : MonoBehaviour, ICannonRef
             _gameHandler.CheckExistingBallTypes();
             // random pick based on the existing balls in the grid; for the loadedBall
             int random = Random.Range(0, _gameHandler._existingBallTypes.Count);
-            _loadedBall = _gemSpawner.GetObjectPool((EGemBall) random).GetObject()._gemBallRef;
+            _loadedBall = _gemSpawner.GetObjectPool(_gameHandler._existingBallTypes[random]).GetObject()._gemBallRef;
             _loadedBall.transform.position = _loadedBallPos.position;
             _loadedBall.transform.parent = _loadedBallPos;
             // random pick based on the existing balls in the grid; for the nextBall
             random = Random.Range(0, _gameHandler._existingBallTypes.Count);
-            _nextBall = _gemSpawner.GetObjectPool((EGemBall) random).GetObject()._gemBallRef;
+            _nextBall = _gemSpawner.GetObjectPool(_gameHandler._existingBallTypes[random]).GetObject()._gemBallRef;
             _nextBall.transform.position = _nextBallPos.position;
             _nextBall.transform.parent = _nextBallPos;
 
@@ -57,7 +57,7 @@ public class Cannon_Firing : MonoBehaviour, ICannonRef
         _loadedBall.transform.parent = _loadedBallPos;
         // random pick based on the existing balls in the grid; for the nextBall
         int random = Random.Range(0, _gameHandler._existingBallTypes.Count);
-        _nextBall = _gemSpawner.GetObjectPool((EGemBall) random).GetObject()._gemBallRef;
+        _nextBall = _gemSpawner.GetObjectPool(_gameHandler._existingBallTypes[random]).GetObject()._gemBallRef;
         _nextBall.transform.position = _nextBallPos.position;
         _nextBall.transform.parent = _nextBallPos;
     }

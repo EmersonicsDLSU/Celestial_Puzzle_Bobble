@@ -123,16 +123,18 @@ public class GemBall_Collision : MonoBehaviour, IGemBallRef
         // convert currentPos to gridRefs index
         int row = (int) _maxVerticalPos - Mathf.FloorToInt(newPosition.y);
         int col = Mathf.FloorToInt(newPosition.x);
+        _gemBallRef._gemBallStatus.position.Row = row;
+        _gemBallRef._gemBallStatus.position.Col = col;
         // assign it to the gridRefs
         FindObjectOfType<GameHandler>().gridRefs[row, col] = _gemBallRef;
         // assign the adjacent ball on based on its new location
-        _gemBallRef._gemBallConnections.CheckNeighboringBalls(FindObjectOfType<GameHandler>(), row, col);
+        _gemBallRef._gemBallConnections.CheckNeighboringBalls(_gameHandler, row, col);
         Debug.Log($"Index: [{row}, {col}]");
         _gemBallRef._gemBallConnections.ShowAdjacentBalls();
 
         // check for possible combination / collapse
         _gemBallRef._gemBallConnections.PerformBFS(_gemBallRef);
-
+        _gameHandler.ShowGridAndAdjacencies();
         //Debug.Log($"Ball Hit At: {ogPos}");
         //Debug.Log($"Ball Place At: {newPosition}");
     }

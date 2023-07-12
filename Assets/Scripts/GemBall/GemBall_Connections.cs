@@ -15,6 +15,7 @@ public class GemBall_Connections : MonoBehaviour, IGemBallRef
     }
     public void CheckNeighboringBalls(GameHandler g, int row, int col)
     {
+        RemoveAllAdjacentBalls();
     if (row % 2 == 0) // Even row
     {
         if (col > 0 && g.gridRefs[row, col - 1] != null) // Check left ball
@@ -133,8 +134,8 @@ public class GemBall_Connections : MonoBehaviour, IGemBallRef
                     {
                         // no more support and not connected to the ceiling
                         bool ifNoMoreSupportANDIsNotAtTheCeiling = adjacentBall._gemBallConnections.AdjacentBalls.All(
-                            ball => ball._gemBallStatus._boundToBeDeleted == true) && adjacentBall.transform.position.y <
-                                FindObjectOfType<GameHandler>().GetCurLD()._maxVerticalPos;
+                                ball => ball._gemBallStatus._boundToBeDeleted == true) && adjacentBall.transform.position.y <
+                            FindObjectOfType<GameHandler>().GetCurLD()._maxVerticalPos;
                         if (!visited.Contains(adjacentBall) && 
                             (adjacentBall._gemBallStatus.GetGemID() == colorToMatch || ifNoMoreSupportANDIsNotAtTheCeiling)
                             )
@@ -144,6 +145,7 @@ public class GemBall_Connections : MonoBehaviour, IGemBallRef
                             prospectDeletes.Add(adjacentBall);
                             // bound to be deleted
                             adjacentBall._gemBallStatus._boundToBeDeleted = true;
+                            Debug.Log($"Add to Prospect!");
                         }
                     }
                 }
@@ -153,21 +155,51 @@ public class GemBall_Connections : MonoBehaviour, IGemBallRef
         // remove all the prospects
         foreach (var ball in prospectDeletes)
         {
-            var g = FindObjectOfType<GameHandler>();
-            int row = (int) g.GetCurLD()._maxVerticalPos - Mathf.FloorToInt(ball.transform.position.y);
-            int col = Mathf.FloorToInt(ball.transform.position.x);
-            Debug.Log($"Delete: [{row}:{col}]");
-            // remove it from the gridsRef
-            FindObjectOfType<GameHandler>().gridRefs[row, col] = null;
             // return the pool object
             ball._gemPoolSc.ReturnPool();
         }
+
+        // verify all balls neighbors
+        FindObjectOfType<GameHandler>().VerifyAllBallsNeighbors();
     }
+    
+    // Function to check if the ball at given position is connected to the wall
+    public bool CheckConnectivity(GemBall_Connections currentBall) {
+        // Base cases: ball is connected to the wall or already visited
+        GemBall_Status status = currentBall._gemBallRef._gemBallStatus;
+        GemBall_Status.BallPosition pos = status.position;
+        if (pos.Row == 0)
+            return true;
+        if (currentBall.AdjacentBalls.Count <= 0) return false;
+
+        // Mark the current ball as visited
+        status._isVisitedForConnectivity = true;
+
+        // Recursive calls for neighboring balls
+        foreach (GemBallRefs neighborBall in currentBall.AdjacentBalls) {
+            if (!neighborBall._gemBallConnections._gemBallRef._gemBallStatus._isVisitedForConnectivity &&
+                CheckConnectivity(neighborBall._gemBallConnections))
+            {
+                return true; // Connected to the wall
+            }
+        }
+        
+        Debug.Log($"Not Connected To WALL!");
+        return false; // Not connected to the wall
+    }
+
 
     // Add a ball to the list of adjacent balls
     public void AddAdjacentBall(GemBallRefs ball)
     {
+        // Check if the ball is already in the AdjacentBalls list
+        if (AdjacentBalls.Contains(ball))
+            return;
+
+        // add it to the adjacency list
         AdjacentBalls.Add(ball);
+        // add this ball to the connected ball to since they're now neighbors
+        ball._gemBallConnections.AddAdjacentBall(this._gemBallRef);
     }
 
     // Remove a ball from the list of adjacent balls
