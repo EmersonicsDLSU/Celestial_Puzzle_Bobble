@@ -112,7 +112,7 @@ public class GameHandler : MonoBehaviour
                     // assign the ball reference to the gridRefs
                     gridRefs[row, col] = gem._gemBallRef;
 
-                    // immediately change the mobility to 'static'
+                    // immediately change the mobility to 'kinematic'
                     gem._gemBallRef._rb.bodyType = RigidbodyType2D.Static;
                     gem._gemBallRef._gemBallStatus.SetMobility(EGemBallMobility.STATIC);
 
@@ -239,6 +239,12 @@ public class GameHandler : MonoBehaviour
                 // check if its out of bounds; exceed the threshold line
                 if (currentBall._gemBallStatus.position.Row < 0 || currentBall._gemBallStatus.position.Row >= GetCurLD()._maxRows)
                 {
+                    // TODO: Perform game over
+                    FindObjectOfType<AudioManager>().Play(SoundCode.GAME_OVER);
+                    FindObjectOfType<PlayerStatus>()._isLose = true;
+                    // open lose window 
+                    FindObjectOfType<UI_Settings>().OpenLoseWindow();
+                    Debug.Log($"GAMEOVER!");
                     return;
                 }
                 // assign the ball to the grid
@@ -288,6 +294,12 @@ public class GameHandler : MonoBehaviour
                         // check if its out of bounds; exceed the threshold line
                         if (ball._gemBallStatus.position.Row < 0 || ball._gemBallStatus.position.Row >= GetCurLD()._maxRows)
                         {
+                            // TODO: Perform game over
+                            FindObjectOfType<AudioManager>().Play(SoundCode.GAME_OVER);
+                            FindObjectOfType<PlayerStatus>()._isLose = true;
+                            // open lose window 
+                            FindObjectOfType<UI_Settings>().OpenLoseWindow();
+                            Debug.Log($"GAMEOVER!");
                             return;
                         }
                         // assign the ball to the grid

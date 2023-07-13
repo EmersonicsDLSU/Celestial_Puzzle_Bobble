@@ -8,7 +8,6 @@ public class GemPool : MonoBehaviour, IGemBallRef
     
     public void Launch(Vector2 direction, float force)
     {
-        _gemBallRef._rb.isKinematic = false;
         _gemBallRef._rb.AddForce(direction.normalized * force, ForceMode2D.Impulse);
         _gemBallRef._gemBallStatus.SetMobility(EGemBallMobility.MOVING);
     }

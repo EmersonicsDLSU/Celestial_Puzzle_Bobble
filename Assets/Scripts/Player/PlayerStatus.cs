@@ -7,10 +7,10 @@ public class PlayerStatus : MonoBehaviour, IPlayerRef
     [HideInInspector]public int _score { get; private set; }
     public int _scoreIncrement = 50;
     [HideInInspector] public float _currentLevelTime;
-    [HideInInspector]public bool _isLose = false;
+    [HideInInspector] public bool _isLose = false;
 
     private float _ceilingTimer;
-    [HideInInspector]public float _ceilingThreshold = 20.0f;
+    [SerializeField]private float _ceilingThreshold = 20.0f;
 
     private GameObject _ceilingGameObject;
     private Cannon_Firing _cannonFiring;

@@ -7672,7 +7672,7 @@ MonoBehaviour:
   _scoreIncrement: 50
   _currentLevelTime: 0
   _isLose: 0
-  _ceilingThreshold: 15
+  _ceilingThreshold: 30
   _currentBaseRow: 0
 --- !u!1 &1416663961
 GameObject:

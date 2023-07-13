@@ -31,7 +31,7 @@ public class GemBall_Collision : MonoBehaviour, IGemBallRef
         // Check if the trigger stayed ball was hit to a wall or to a ball
         if (collision.gameObject.CompareTag("GemBall") || collision.gameObject.CompareTag("Wall"))
         {
-            // switch the rigidBody to static
+            // switch the rigidBody to kinematic
             _gemBallRef._rb.bodyType = RigidbodyType2D.Static;
             _gemBallRef._gemBallStatus.SetMobility(EGemBallMobility.STATIC);
 
@@ -129,6 +129,12 @@ public class GemBall_Collision : MonoBehaviour, IGemBallRef
         // check if its out of bounds; exceed the threshold line
         if (row < 0 || row >= _gameHandler.GetCurLD()._maxRows)
         {
+            // TODO: Perform game over
+            FindObjectOfType<AudioManager>().Play(SoundCode.GAME_OVER);
+            FindObjectOfType<PlayerStatus>()._isLose = true;
+            // open lose window 
+            FindObjectOfType<UI_Settings>().OpenLoseWindow();
+            Debug.Log($"GAMEOVER!");
             return;
         }
         // assign it to the gridRefs
