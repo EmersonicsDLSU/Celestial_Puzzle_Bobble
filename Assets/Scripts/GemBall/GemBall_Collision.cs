@@ -20,7 +20,7 @@ public class GemBall_Collision : MonoBehaviour, IGemBallRef
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (_gemBallRef._gemBallStatus.GetMobility() == EGemBallMobility.STATIC) return;
+        if (_gemBallRef._gemBallStatus.GetMobility() != EGemBallMobility.MOVING) return;
 
         // for bounce reflect
         float speed = _lastVelocity.magnitude;

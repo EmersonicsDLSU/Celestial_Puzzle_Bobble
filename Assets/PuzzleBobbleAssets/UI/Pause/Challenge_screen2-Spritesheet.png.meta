@@ -38,7 +38,7 @@ TextureImporter:
     mipBias: 0
     wrapU: 1
     wrapV: 1
-    wrapW: 0
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -180,7 +180,7 @@ TextureImporter:
         height: 29
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 0, y: 11, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -201,7 +201,7 @@ TextureImporter:
         height: 29
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 0, y: 11, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -218,8 +218,8 @@ TextureImporter:
         serializedVersion: 2
         x: 22
         y: 66
-        width: 36
-        height: 11
+        width: 10
+        height: 10
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -359,6 +359,48 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Challenge_screen2-Spritesheet_11
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 66
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3dd65451b4814cf40bc283beaa926a55
+      internalID: -1721939326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Challenge_screen2-Spritesheet_12
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 66
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f750ce22e7e5ab942a99d7c2fbda5027
+      internalID: 1488182448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -373,6 +415,8 @@ TextureImporter:
       Challenge_screen2-Spritesheet_0: 918749069
       Challenge_screen2-Spritesheet_1: 2114677474
       Challenge_screen2-Spritesheet_10: 651500136
+      Challenge_screen2-Spritesheet_11: -1721939326
+      Challenge_screen2-Spritesheet_12: 1488182448
       Challenge_screen2-Spritesheet_2: -306779413
       Challenge_screen2-Spritesheet_3: -670545604
       Challenge_screen2-Spritesheet_4: -2069070395

@@ -12,6 +12,8 @@ public class Cannon_Firing : MonoBehaviour, ICannonRef
     private GemBallRefs _loadedBall, _nextBall;
     private GameHandler _gameHandler;
 
+    private UI_Settings _uiSettings;
+
     public CannonRefs _cannonRef { get; private set; }
     
     [SerializeField] private float _force = 20f;
@@ -20,6 +22,11 @@ public class Cannon_Firing : MonoBehaviour, ICannonRef
 
     void Start()
     {
+        _uiSettings = FindObjectOfType<UI_Settings>();
+        if (_uiSettings == null)
+        {
+            Debug.LogError("Missing 'UI_Settings' script!");
+        }
         _gemSpawner = FindObjectOfType<GemSpawner>();
         if (_gemSpawner == null)
         {
@@ -76,7 +83,7 @@ public class Cannon_Firing : MonoBehaviour, ICannonRef
     public void RefUpdate(CannonRefs mainRef)
     {
         // stop the process
-        if (_gemSpawner == null) return;
+        if (_gemSpawner == null || _uiSettings.IsPaused()) return;
 
         _timer += Time.deltaTime;
         // Fire a ball
@@ -93,19 +100,6 @@ public class Cannon_Firing : MonoBehaviour, ICannonRef
             else
             {
                 Debug.LogError($"No Gem Spawner Assigned! {_loadedBall._gemBallStatus.GetGemID()}");
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            int random = Random.Range(0, (int)EGemBall.ENUM_SIZE);
-            if (_gemSpawner.GetObjectPool((EGemBall) random) != null)
-            {
-                _gemSpawner.GetObjectPool((EGemBall) random).ReturnObject();
-            }
-            else
-            {
-                Debug.LogError($"No Gem Spawner Assigned! {random}");
             }
         }
     }
