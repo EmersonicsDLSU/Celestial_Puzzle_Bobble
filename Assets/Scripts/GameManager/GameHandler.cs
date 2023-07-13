@@ -14,16 +14,16 @@ public class GameHandler : MonoBehaviour
     public int _comboLength = 3;
     [HideInInspector] public List<EGemBall> _existingBallTypes = new List<EGemBall>();
 
+    [HideInInspector] public GameObject _player;
+    [HideInInspector] public GameObject _tileMapLevel;
+
     // Start is called before the first frame update
     void Awake()
     {
         if (_currentLevelDesign == null) Debug.LogError("Missing 'LevelDesign' script!");
         if (_playerParent == null) Debug.LogError("Missing 'Player Parent' gameObject!");
         if (_levelParent == null) Debug.LogError("Missing 'Player Parent' gameObject!");
-    }
-
-    void Start()
-    {
+        
         _gemSpawner = FindObjectOfType<GemSpawner>();
         if (_gemSpawner == null)
         {
@@ -32,14 +32,19 @@ public class GameHandler : MonoBehaviour
         if (_currentLevelDesign != null && _playerParent != null && _levelParent != null)
         {
             // position the player in the world
-            GameObject player = Instantiate(_currentLevelDesign._playerShooterPrefab, _playerParent.transform.position, Quaternion.identity);
-            player.transform.parent = _playerParent.transform;
+            _player = Instantiate(_currentLevelDesign._playerShooterPrefab, _playerParent.transform.position, Quaternion.identity);
+            _player.transform.parent = _playerParent.transform;
             // position the level in the world
-            GameObject tileMapLevel = Instantiate(_currentLevelDesign._tileMapPrefab, _levelParent.transform.position, Quaternion.identity);
-            tileMapLevel.transform.parent = _levelParent.transform;
+            _tileMapLevel = Instantiate(_currentLevelDesign._tileMapPrefab, _levelParent.transform.position, Quaternion.identity);
+            _tileMapLevel.transform.parent = _levelParent.transform;
             // assign the starting balls of the level design
             InitializeStartingBalls();
         }
+    }
+
+    void Start()
+    {
+
     }
     
     // Dictionary to map initials to EGemBall enum values
@@ -185,6 +190,124 @@ public class GameHandler : MonoBehaviour
             }
         }
     }
+    public void MoveDownAllBalls()
+    {
+        List <GemBallRefs> ballsToMove = new List <GemBallRefs>();
+        List <GemBallRefs> ballsAtEdge = new List <GemBallRefs>();
+
+        // reset all the gridRefs element
+        for (int row = 0; row < GetCurLD()._maxRows; row++)
+        {
+            for (int col = 0; col < GetCurLD()._maxColumns; col++)
+            {
+                if (gridRefs[row, col] == null || gridRefs[row, col]._gemBallConnections == null) continue;
+                // add to balls to move list
+                if (col < GetCurLD()._maxColumns - 1)
+                    ballsToMove.Add(gridRefs[row, col]);
+                else
+                    ballsAtEdge.Add(gridRefs[row, col]);
+                // make the cell vacant
+                gridRefs[row, col] = null;
+            }
+        }
+
+        // move the balls 11 units to the right and downward
+        foreach (var currentBall in ballsToMove)
+        {
+            currentBall._gemBallStatus.position.Row += 1;
+                //Debug.Log($"Index: [{row},{col}]");
+
+                // if new row is even
+                if (currentBall._gemBallStatus.position.Row % 2 == 0)
+                {
+                    // translate the new position of the ball
+                    Vector3 newPosition = currentBall.transform.position;
+                    newPosition.x = currentBall._gemBallStatus.position.Col + GetCurLD()._horizontalOffsetEven;
+                    newPosition.y = GetCurLD()._maxVerticalPos - currentBall._gemBallStatus.position.Row;
+                    currentBall.transform.position = newPosition;
+                }
+                // if new row is odd
+                else
+                {
+                    // translate the new position of the ball
+                    Vector3 newPosition = currentBall.transform.position;
+                    newPosition.x = currentBall._gemBallStatus.position.Col + GetCurLD()._horizontalOffsetOdd;
+                    newPosition.y = GetCurLD()._maxVerticalPos - currentBall._gemBallStatus.position.Row;
+                    currentBall.transform.position = newPosition;
+                }
+                
+                // check if its out of bounds; exceed the threshold line
+                if (currentBall._gemBallStatus.position.Row < 0 || currentBall._gemBallStatus.position.Row >= GetCurLD()._maxRows)
+                {
+                    return;
+                }
+                // assign the ball to the grid
+                gridRefs[currentBall._gemBallStatus.position.Row, currentBall._gemBallStatus.position.Col] = currentBall;
+                // recheck its new neighboring balls
+                currentBall._gemBallConnections.CheckNeighboringBalls(this, currentBall._gemBallStatus.position.Row,
+                    currentBall._gemBallStatus.position.Col);
+        }
+        
+        // increase the base row
+        FindAnyObjectByType<PlayerStatus>()._currentBaseRow += 1;
+
+        for (int i = ballsAtEdge.Count - 1; i >= 0; i--)
+        {
+            var ball = ballsAtEdge[i];
+            // reset all the gridRefs element
+            bool isBreak = false;
+            for (int row = 0; row < GetCurLD()._maxRows && !isBreak; row++)
+            {
+                for (int col = 0; col < GetCurLD()._maxColumns; col++)
+                {
+                    bool ifValidCol = (row % 2 == 0) ? true : (col == GetCurLD()._maxColumns - 1 ? false : true);
+                    if (gridRefs[row, col] == null && ifValidCol && row >= FindAnyObjectByType<PlayerStatus>()._currentBaseRow)
+                    {
+                        Debug.Log($"Name:{ball.name} New Row: {row} Col:{col}");
+                        ball._gemBallStatus.position.Row = row;
+                        ball._gemBallStatus.position.Col = col;
+                        // if new row is even
+                        if (ball._gemBallStatus.position.Row % 2 == 0)
+                        {
+                            // translate the new position of the ball
+                            Vector3 newPosition = ball.transform.position;
+                            newPosition.x = ball._gemBallStatus.position.Col + GetCurLD()._horizontalOffsetEven;
+                            newPosition.y = GetCurLD()._maxVerticalPos - ball._gemBallStatus.position.Row;
+                            ball.transform.position = newPosition;
+                        }
+                        // if new row is odd
+                        else
+                        {
+                            // translate the new position of the ball
+                            Vector3 newPosition = ball.transform.position;
+                            newPosition.x = ball._gemBallStatus.position.Col + GetCurLD()._horizontalOffsetOdd;
+                            newPosition.y = GetCurLD()._maxVerticalPos - ball._gemBallStatus.position.Row;
+                            ball.transform.position = newPosition;
+                        }
+                        
+                        // check if its out of bounds; exceed the threshold line
+                        if (ball._gemBallStatus.position.Row < 0 || ball._gemBallStatus.position.Row >= GetCurLD()._maxRows)
+                        {
+                            return;
+                        }
+                        // assign the ball to the grid
+                        gridRefs[row, col] = ball;
+                        // recheck its new neighboring balls
+                        ball._gemBallConnections.CheckNeighboringBalls(this, ball._gemBallStatus.position.Row,
+                            ball._gemBallStatus.position.Col);
+                        
+                        // Remove the ball from the list
+                        ballsAtEdge.RemoveAt(i);
+                        isBreak = true;
+                        break;
+                    }
+                }
+            }
+
+        }
+        
+    }
+
     private void ResetVisitedStateForConnectivity()
     {
         // reset visit status for connectivity check

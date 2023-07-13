@@ -171,7 +171,7 @@ public class GemBall_Connections : MonoBehaviour, IGemBallRef
         // Base cases: ball is connected to the wall or already visited
         GemBall_Status status = currentBall._gemBallRef._gemBallStatus;
         GemBall_Status.BallPosition pos = status.position;
-        if (pos.Row == 0)
+        if (pos.Row == FindAnyObjectByType<PlayerStatus>()._currentBaseRow)
             return true;
         if (currentBall.AdjacentBalls.Count <= 0) return false;
 

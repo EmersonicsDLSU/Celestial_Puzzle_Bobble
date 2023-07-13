@@ -7,6 +7,8 @@ public class ThresholdLine : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         // Check if the colliding object has a specific tag
+        if (other.CompareTag("GemBall") )
+            Debug.Log($"Name: {other.name} Mobility:{other.GetComponentInChildren<GemBall_Status>().GetMobility()}");
         if (other.CompareTag("GemBall") && 
             other.GetComponentInChildren<GemBall_Status>().GetMobility() == EGemBallMobility.STATIC)
         {

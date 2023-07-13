@@ -78,7 +78,7 @@ public class Cannon_Firing : MonoBehaviour, ICannonRef
             //TODO: Win trigger code
             FindObjectOfType<AudioManager>().Play(SoundCode.CONTINUE);
             // open lose window 
-            FindObjectOfType<UI_Settings>().OpenLoseWindow();
+            FindObjectOfType<UI_Settings>().OpenWinWindow();
         }
     }
 

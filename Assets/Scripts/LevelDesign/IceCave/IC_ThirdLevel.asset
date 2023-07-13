@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 56d33845354f2b443a5ae4ba59fbc502, type: 3}
-  m_Name: IC_FirstLevel
+  m_Name: IC_ThirdLevel
   m_EditorClassIdentifier: 
-  _txtStartingBalls: {fileID: 4900000, guid: 6f09635399cf47b40969e1133c798e27, type: 3}
+  _txtStartingBalls: {fileID: 4900000, guid: 327b15444b711eb4abb54cc17957597e, type: 3}
   _tileMapPrefab: {fileID: 9000308090048161133, guid: 89fee6b65eee9ce4a973de7d30c3d75d, type: 3}
   _playerShooterPrefab: {fileID: 4476679731690160350, guid: fe55bebc540efeb418207c76a0adc616, type: 3}
   _maxColumns: 11
