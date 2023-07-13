@@ -19,6 +19,10 @@ public class UI_Player : MonoBehaviour
     public void UpdateScore(int score)
     {
         int index = _numberPlaces.Count - 1;
+        foreach (var letter in _numberPlaces)
+        {
+            letter.sprite = _uiResources._numbers[10];
+        }
         while (score > 0)
         {
             int digit = score % 10; // Extract the last digit
@@ -26,7 +30,6 @@ public class UI_Player : MonoBehaviour
 
             // assign the image number to the number place
             _numberPlaces[index--].sprite = _uiResources._numbers[digit];
-            // Update the image in your UI based on the digitImage
             
         }
     }

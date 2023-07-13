@@ -31,13 +31,14 @@ public class GemBall_Collision : MonoBehaviour, IGemBallRef
         // Check if the trigger stayed ball was hit to a wall or to a ball
         if (collision.gameObject.CompareTag("GemBall") || collision.gameObject.CompareTag("Wall"))
         {
-            // snap the ball to its new position
-            SnapPosition();
-
             // switch the rigidBody to static
             _gemBallRef._rb.bodyType = RigidbodyType2D.Static;
             _gemBallRef._gemBallStatus.SetMobility(EGemBallMobility.STATIC);
-            
+
+            // snap the ball to its new position
+            SnapPosition();
+            // wait for the collapse to finish; before player can shoot again
+            FindObjectOfType<Cannon_Firing>()._canShoot = true;
         }
     }
 
@@ -125,6 +126,11 @@ public class GemBall_Collision : MonoBehaviour, IGemBallRef
         int col = Mathf.FloorToInt(newPosition.x);
         _gemBallRef._gemBallStatus.position.Row = row;
         _gemBallRef._gemBallStatus.position.Col = col;
+        // check if its out of bounds; exceed the threshold line
+        if (row < 0 || row >= _gameHandler.GetCurLD()._maxRows)
+        {
+            return;
+        }
         // assign it to the gridRefs
         FindObjectOfType<GameHandler>().gridRefs[row, col] = _gemBallRef;
         // assign the adjacent ball on based on its new location
@@ -134,8 +140,6 @@ public class GemBall_Collision : MonoBehaviour, IGemBallRef
 
         // check for possible combination / collapse
         _gemBallRef._gemBallConnections.PerformBFS(_gemBallRef);
-        // wait for the collapse to finish; before player can shoot again
-        FindObjectOfType<Cannon_Firing>()._canShoot = true;
 
         //_gameHandler.ShowGridAndAdjacencies();
         //Debug.Log($"Ball Hit At: {ogPos}");

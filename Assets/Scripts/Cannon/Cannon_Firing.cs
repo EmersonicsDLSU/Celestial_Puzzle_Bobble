@@ -57,6 +57,8 @@ public class Cannon_Firing : MonoBehaviour, ICannonRef
 
     private void LoadNewBall()
     {
+        if (FindObjectOfType<PlayerStatus>()._isLose) return;
+
         // load the balls
         _gameHandler.CheckExistingBallTypes();
         // swap nextBall to loadedBall
@@ -75,6 +77,8 @@ public class Cannon_Firing : MonoBehaviour, ICannonRef
         {
             //TODO: Win trigger code
             FindObjectOfType<AudioManager>().Play(SoundCode.CONTINUE);
+            // open lose window 
+            FindObjectOfType<UI_Settings>().OpenLoseWindow();
         }
     }
 

@@ -7,10 +7,15 @@ public class ThresholdLine : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         // Check if the colliding object has a specific tag
-        if (other.CompareTag("GemBall"))
+        if (other.CompareTag("GemBall") && 
+            other.GetComponentInChildren<GemBall_Status>().GetMobility() == EGemBallMobility.STATIC)
         {
             // TODO: Perform game over
             FindObjectOfType<AudioManager>().Play(SoundCode.GAME_OVER);
+            FindObjectOfType<PlayerStatus>()._isLose = true;
+            // open lose window 
+            FindObjectOfType<UI_Settings>().OpenLoseWindow();
+            Debug.Log($"GAMEOVER!");
         }
     }
 }
