@@ -2,7 +2,7 @@
  MegaCatScreening  
 
 Allotted Working Hours:  
-Day 0(Thurs): 5 hours : analyzing, creating basic scripts 
+Day 0(Thurs): 5 hours : analyzing, creating basic scripts  
 Day 1(Friday): 5 hours : shooting and moving mechanic  
 Day 2(Saturday): 5 hours : level design, creating prefabs  
 Day 3(Sunday): 8 hours : fixing core features, level templates  
